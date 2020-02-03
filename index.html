@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html style="overflow: hidden">
+<head>
+  <meta charset="utf-8">
+  <title>云雀</title>
+  <link rel="shortcut icon" type="image/png" href="static/logo.png"/>
+  <link rel="stylesheet" href="static/css/icofont.min.css">
+  <style>
+    html, body {
+      margin: 0px !important;
+    }
+
+    .full-height {
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .max-full-height {
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .title-bar {
+      height: 24px;
+      margin: 0px;
+      padding: 0px;
+      background-color: #10239e;
+      -webkit-app-region: drag;
+    }
+
+    .button-container {
+      height: 24px;
+      float: right;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .title-button {
+      -webkit-app-region: no-drag;
+      height: 100%;
+      width: 48px;
+      background-color: #002f8b;
+      border: none;
+      text-align: center;
+      color: #f9f9f9;
+      transition-duration: 0.4s;
+      padding: 0px;
+    }
+
+    .button-gap {
+      margin-left: -7px;
+    }
+
+    .min-button:hover, .max-button:hover, .question-button:hover {
+      background-color: #0760b4;
+      display: inline-block;
+    }
+
+    .quit-button:hover {
+      background-color: #b40c0c;
+      display: inline-block;
+    }
+
+    #app {
+      background-color: #eeeeee;
+      height: calc(100vh - 24px);
+    }
+
+    .nb-boder-shadow {
+      box-shadow: black 0px 0px 6px;
+      background: transparent;
+      border-radius: 4px;
+      position: fixed;
+      left: 8px;
+      top: 8px;
+      bottom: 8px;
+      right: 8px;
+    }
+
+    .lark-main {
+      height: 100%;
+      background-color: #eeeeee;
+      /*position: absolute;*/
+      /*left: 0;*/
+      /*top: 0;*/
+      /*bottom: 0;*/
+      /*right: 0;*/
+      /*padding: 6px;*/
+      /*background: transparent;*/
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black; /* 悬停元素上显示点线 */
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+
+      position: absolute;
+      z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+    }
+
+  </style>
+
+</head>
+<body id="appMain" class="full-height">
+<div class="lark-main">
+  <div class="title-bar">
+    <button id="menuSetting" class="title-button"><i class="icofont-navigation-menu"></i></button>
+
+    <!--    <div style="float: left; padding: 2px; color: #eeeeee">云雀协同</div>-->
+    <div class="button-container">
+      <button id="question" class="title-button button-gap question-button"><i class="icofont-question icofont-1x"></i>
+      </button>
+      <button id="min" class="title-button button-gap min-button"><i class="icofont-minus icofont-1x"></i></button>
+      <button id="max" class="title-button button-gap max-button"><i class="icofont-maximize icofont-1x"></i></button>
+      <button id="close" class="title-button button-gap quit-button"><i class="icofont-close icofont-1x"></i></button>
+    </div>
+  </div>
+  <div id="app"></div>
+</div>
+</body>
+<!--<script type="text/javascript" src="/static/bg.js"></script>-->
+<script>
+  // let cp = require('child_process')
+  let gui = require('nw.gui')
+  let win = gui.Window.get()
+  let flag = false  // 标识当前的窗口是否最大化
+  let min = document.getElementById('min')
+  let max = document.getElementById('max')
+  let close = document.getElementById('close')
+  let question = document.getElementById('question')
+  let menuSetting = document.getElementById('menuSetting')
+  let isShowWindow = true
+  // 消息通知（临时加）
+  // eslint-disable-next-line
+  let isAppActive = true
+  // 图标闪烁（临时加）
+  let flashTimer = 0
+  // 是否打开专注模式（临时加）
+  let isFocusMode = false
+
+  let tray = new gui.Tray({
+    title: '云雀',
+    icon: '/static/logo.png'
+  })
+  tray.tooltip = '点击打开云雀'
+
+  win.on('close', function () {
+    this.hide()
+    isShowWindow = false
+  })
+
+  // 添加菜单
+  let menu = new gui.Menu()
+  // 专注模式（消息免打扰）
+  // 消息不弹窗 只闪动
+  menu.append(new gui.MenuItem({
+    type: 'checkbox',
+    label: '消息免打扰',
+    checked: isFocusMode,
+    click: function () {
+      isFocusMode = !isFocusMode
+    }
+  }))
+  // 分割线
+  menu.append(new gui.MenuItem({ type: 'separator' }))
+  // 退出云雀
+  menu.append(new gui.MenuItem({
+    type: 'normal',
+    label: '退出云雀',
+    click: function () {
+      win.hide()
+      sentCloseMsg()
+      setTimeout(() => {
+        gui.App.quit()
+      }, 1500)
+    }
+  }))
+
+  tray.menu = menu
+
+  tray.on('click', function () {
+    if (isShowWindow) {
+      // close方法会触发close事件
+      win.close()
+    } else {
+      // show方法会触发focus事件
+      win.show()
+      // 排除show在某些平台不触发focus事件的隐患
+      win.focus()
+    }
+  })
+
+  min.onclick = () => {
+    win.minimize()
+    min.blur()
+  }
+  max.onclick = () => {
+    max.blur()
+    if (flag) {
+      win.restore()  // 如果是最大化，则恢复窗口
+    } else {
+      win.maximize()  // 否则，最大化窗口
+    }
+  }
+  close.onclick = () => {
+    close.blur()
+    win.close()
+  }
+  question.onclick = () => {
+    question.blur()
+    gui.Window.open('http://10.11.24.129:8888/help.pdf', {
+      new_instance: false,
+      focus: true,
+      width: 1200,
+      height: 700,
+      title: '云雀'
+    })
+  }
+
+  menuSetting.onclick = () => {
+    // debugger
+    alert('云雀版本：' + gui.App.manifest.version + '-' + gui.App.manifest.description + '\n' + '更新时间:' + gui.App.manifest.updataTime)
+  }
+
+  // 监听窗口最大化事件
+  win.on('maximize', () => {
+    // appMain.classList.remove('full-height')
+    // appMain.classList.remove('nb-boder-shadow')
+    // appMain.classList.add('max-full-height')
+    flag = true
+  })
+  // 监听窗口恢复事件
+  win.on('restore', () => {
+    // appMain.classList.add('nb-boder-shadow')
+    // appMain.classList.add('full-height')
+    // appMain.classList.remove('max-full-height')
+    flag = false
+  })
+  // 监听窗口失去焦点
+  win.on('blur', function () {
+    isAppActive = false
+  })
+  // 监听窗口关闭（到托盘）
+  win.on('close', function () {
+    isAppActive = false
+    // 标识窗口关闭（到托盘）
+    isShowWindow = false
+  })
+  // 监听窗口获得焦点
+  win.on('focus', function () {
+    isAppActive = true
+    // 标识窗口打开
+    isShowWindow = true
+    // 停止闪动
+    stopIconFlash()
+  })
+  // 启动闪烁定时器
+  // eslint-disable-next-line
+  function startIconFlash () {
+    flashTimer = setInterval(function () {
+      const icon = '/static/logo.png'
+      const iconTrans = '/static/logo-trans.png'
+      tray.icon = (tray.icon === icon) ? iconTrans : icon
+      tray.tooltip = '您有新消息'
+    }, 300)
+  }
+  // 清楚闪烁定时器
+  function stopIconFlash () {
+    clearInterval(flashTimer)
+    flashTimer = 0
+    tray.icon = '/static/logo.png'
+    tray.tooltip = '点击打开云雀'
+  }
+  // 禁掉文件拖拽进客户端
+  document.addEventListener('drop', function (e) {
+    e.preventDefault()
+  })
+  document.addEventListener('dragover', function (e) {
+    e.preventDefault()
+  })
+  // 向前端发送退出消息
+  function sentCloseMsg () {
+    document.getElementById('larkPage')
+    .contentWindow.postMessage('desktop-logout', '*')
+  }
+  // dakai.onclick = () => {
+  //   cp.exec('D:\\迅雷下载\\yarn-1.19.1.msi', function (error, stdout, stderr) {
+  //     console.log('error', error)
+  //     console.log('stdout', stdout)
+  //     console.log('stderr', stderr)
+  //   })
+  // }
+</script>
+</html>

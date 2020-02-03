@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../css/icofont.min.css">
+  <script src="browser.js"></script>
+</head>
+<body>
+<div class="browser-header" id="header">
+  <div id="tools">
+    <button class="tool" id="close"><i class="icofont-close icofont-1x"></i></button>
+    <button class="tool" id="max"><i class="icofont-maximize icofont-1x"></i></button>
+    <button class="tool" id="min"><i class="icofont-minus icofont-1x"></i></button>
+    <!-- <button class="addTab" id="addTabs">+</button> -->
+  </div>
+  <div id="controls">
+    <div style="float: left; height: 36px;">
+      <button class="btn" id="back" title="返回"><i class="icofont-arrow-left icofont-2x"></i></button>
+      <button class="btn" id="reload" title="刷新"><i class="icofont-refresh icofont-2x"></i></button>
+      <!-- <button id="addDiv">打开新标签</button> -->
+    </div>
+       <div style="float: right; height: 36px;">
+         <button id="ie" title="ie浏览器"></button>
+         <button id="chrome" title="谷歌浏览器"></button>
+         <button id="firefox" title="火狐浏览器"></button>
+       </div>
+    <!--    <button id="forward" title="前进" hidden>&#9654;</button>-->
+    <!--    <button id="home" title="主页" hidden>&#8962;</button>-->
+    <!--    <button id="terminate" title="模拟崩溃" hidden>&#9760;</button>-->
+    <!--    <button id="clear-data" title="清除数据" hidden>&#9851;</button>-->
+
+    <form id="location-form">
+      <div id="center-column">
+        <input id="location" type="text" value="" hidden>
+      </div>
+      <input type="submit" value="Go" hidden>
+    </form>
+
+    <!--    <button id="zoom" title="改变大小" hidden>&#128270;</button>-->
+    <!--    <button id="find" title="查找" hidden>&#128294;</button>-->
+
+  </div>
+</div>
+<div id="webviewContainer">
+</div>
+<!--<webview class="browser-webview" id="webview" src=""></webview>-->
+<!--<div id="zoom-box">-->
+<!--  <form id="zoom-form">-->
+<!--    <input id="zoom-text" type="text">-->
+<!--    <input type="submit" value="&#128270;">-->
+<!--    <button id="zoom-in">&#10133;</button>-->
+<!--    <button id="zoom-out">&#10134;</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<!--<div id="find-box">-->
+<!--  <form id="find-form">-->
+<!--    <input id="find-text" type="text">-->
+<!--    <div id="find-results"></div>-->
+<!--    <input type="submit" style="position:absolute; visibility:hidden">-->
+<!--    <button id="match-case">aA</button>-->
+<!--    <button id="find-backward">&#60;</button>-->
+<!--    <button id="find-forward">&#62;</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<!--<div id="clear-data-overlay" class="overlay"></div>-->
+<!--<div id="clear-data-confirm">-->
+<!--  <h2>Clear browsing data</h2>-->
+<!--  <p>-->
+<!--    选择一个要清除得-->
+<!--  </p>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-appcache"></input>-->
+<!--      <span>应用缓存</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-cookies"></input>-->
+<!--      <span>Cookies</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-fs"></input>-->
+<!--      <span>文件系统</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-indexedDB"></input>-->
+<!--      <span>数据库索引</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-localStorage"></input>-->
+<!--      <span>Local storage</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-webSQL"></input>-->
+<!--      <span>WebSQL</span>-->
+<!--    </label>-->
+<!--  </li>-->
+<!--  <li id="clear-data-checkbox">-->
+<!--    <label>-->
+<!--      <input type="checkbox" id="clear-cache"></input>-->
+<!--      <span>Cache</span>-->
+<!--    </label>-->
+<!--  </li>-->
+
+<!--  <br>-->
+
+<!--  <button id="clear-data-cancel">取消</button>-->
+<!--  <button id="clear-data-ok">清除浏览数据</button>-->
+<!--</div>-->
+
+<!--<div id="sad-webview">-->
+<!--  <div id="sad-webview-icon">&#9762;</div>-->
+<!--  <h2 id="crashed-label">来了老弟</h2>-->
+<!--  <h2 id="killed-label">牛逼</h2>-->
+<!--  <p>出了点问题</p>-->
+<!--</div>-->
+</body>
+<script>
+// eslint-disable-next-line
+  let gui = require('nw.gui')
+  window.onload = function () {
+    function getArgs () {
+      var args = {}
+      var query = location.search.substring(1)     // Get query string
+      var pairs = query.split('&')                 // Break at ampersand
+      for (var i = 0; i < pairs.length; i++) {
+        var pos = pairs[i].indexOf('=')          // Look for "name=value"
+        if (pos === -1) continue                  // If not found, skip
+        var argname = pairs[i].substring(0, pos)  // Extract the name
+        var value = pairs[i].substring(pos + 1)    // Extract the value
+        value = decodeURIComponent(value)        // Decode it, if needed
+        args[argname] = value                    // Store as a property
+      }
+      return args                                  // Return the object
+    }
+
+    prepareFrame(getArgs().URL)
+    // eslint-disable-next-line
+    onloads()
+  }
+
+  function prepareFrame (urlTemp) {
+    var newWebview = document.createElement('webview')
+    newWebview.setAttribute('id', 'webview')
+    newWebview.setAttribute('class', 'browser-webview')
+    newWebview.setAttribute('src', decodeURIComponent(urlTemp))
+    newWebview.style.height = '100%'
+    newWebview.style.width = '100%'
+    newWebview.style.display = 'flex'
+    newWebview.autosize = 'on'
+    newWebview.minwidth = '1200px'
+    newWebview.minheight = '900px'
+    document.getElementById('webviewContainer').appendChild(newWebview)
+  }
+</script>
+<style>
+  body {
+    margin: 0px;
+    height: 100%;
+    overflow-y: hidden;
+  }
+
+  #header {
+    background-color: #eee;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #tools {
+    height: 24px;
+    -webkit-app-region: drag;
+  }
+
+  .tool {
+    float: right;
+    -webkit-app-region: no-drag;
+    height: 100%;
+    width: 48px;
+    background-color: #eee;
+    border: none;
+    text-align: center;
+    color: #0a0a0a;
+    transition-duration: 0.4s;
+    padding: 0px;
+  }
+
+  .addTab{
+    float: left;
+    -webkit-app-region: no-drag;
+  }
+
+  #back, #reload {
+    -webkit-app-region: no-drag;
+    height: 100%;
+    width: 36px;
+    background-color: #eee;
+    border: none;
+    text-align: center;
+    color: #0a0a0a;
+    transition-duration: 0.4s;
+    padding: 0px;
+  }
+
+  #ie, #chrome, #firefox {
+    height: 24px;
+    width: 24px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-right: 10px;
+    -webkit-app-region: no-drag;
+  }
+
+  .tool:hover, #back:hover, #reload:hover {
+    background-color: #c2c5c7;
+    display: inline-block;
+  }
+
+  #ie {
+    background-image: url(/static/IE.png);
+    background-size: cover;
+  }
+
+  #chrome {
+    background-image: url(/static/chrome.png);
+    background-size: cover;
+  }
+
+  #firefox {
+    background-image: url(/static/firefox.png);
+    background-size: cover;
+  }
+
+  #controls {
+    height: 36px;
+    -webkit-app-region: drag;
+  }
+
+  /*.browser-webview {*/
+  /*  display: flex;*/
+  /*  height: calc(100vh - 60) !important;*/
+  /*}*/
+
+  .browser-header {
+    border-bottom: 1px solid #dcdee0;
+  }
+
+  #webviewContainer {
+    height: calc(100vh - 60px);
+  }
+
+  /* #biaoqian {
+    float: left;
+    width: 100px;
+    border: solid;
+  } */
+</style>
+</html>
