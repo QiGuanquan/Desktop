@@ -25,6 +25,9 @@
       margin: 0px;
       padding: 0px;
       background-color: #10239e;
+      box-shadow: 0px 3px 5px #888888;
+      position: relative;
+      z-index: 1;
       -webkit-app-region: drag;
     }
 
@@ -53,7 +56,16 @@
 
     .min-button:hover, .max-button:hover, .question-button:hover {
       background-color: #0760b4;
+      outline: none;
       display: inline-block;
+    }
+    
+     #menuSetting {
+      outline: none;
+    }
+
+    #menuSetting:hover {
+      background-color: #0760b4;
     }
 
     .quit-button:hover {
