@@ -119,8 +119,6 @@
 <div class="lark-main">
   <div class="title-bar">
     <button id="menuSetting" class="title-button"><i class="icofont-navigation-menu"></i></button>
-
-    <!--    <div style="float: left; padding: 2px; color: #eeeeee">云雀协同</div>-->
     <div class="button-container">
       <button id="question" class="title-button button-gap question-button"><i class="icofont-question icofont-1x"></i>
       </button>
@@ -132,7 +130,6 @@
   <div id="app"></div>
 </div>
 </body>
-<!--<script type="text/javascript" src="/static/bg.js"></script>-->
 <script>
   // let cp = require('child_process')
   let gui = require('nw.gui')
@@ -238,16 +235,10 @@
 
   // 监听窗口最大化事件
   win.on('maximize', () => {
-    // appMain.classList.remove('full-height')
-    // appMain.classList.remove('nb-boder-shadow')
-    // appMain.classList.add('max-full-height')
     flag = true
   })
   // 监听窗口恢复事件
   win.on('restore', () => {
-    // appMain.classList.add('nb-boder-shadow')
-    // appMain.classList.add('full-height')
-    // appMain.classList.remove('max-full-height')
     flag = false
   })
   // 监听窗口失去焦点
@@ -297,12 +288,5 @@
     document.getElementById('larkPage')
     .contentWindow.postMessage('desktop-logout', '*')
   }
-  // dakai.onclick = () => {
-  //   cp.exec('D:\\迅雷下载\\yarn-1.19.1.msi', function (error, stdout, stderr) {
-  //     console.log('error', error)
-  //     console.log('stdout', stdout)
-  //     console.log('stderr', stderr)
-  //   })
-  // }
 </script>
 </html>
