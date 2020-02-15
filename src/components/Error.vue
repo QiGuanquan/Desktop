@@ -25,7 +25,7 @@
 <script>
 
   export default {
-    name: 'Error',
+    name: 'error',
     data () {
       return {
         msg: ''
