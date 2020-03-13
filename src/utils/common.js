@@ -37,6 +37,7 @@ export function cmd (p) {
   let iconv = require('iconv-lite')
   let encoding = 'cp936'
   let binaryEncoding = 'binary'
+  // eslint-disable-next-line no-unused-vars
   let __this = this
 
   function puts (error, stdout, stderr) {
