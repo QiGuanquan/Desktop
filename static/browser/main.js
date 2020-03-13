@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line no-undef
 chrome.app.runtime.onLaunched.addListener(function () {
   runApp()
