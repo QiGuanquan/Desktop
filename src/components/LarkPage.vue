@@ -55,8 +55,6 @@ export default {
     webview.addEventListener('permissionrequest', function (e) {
       handleRequest(e)
     })
-  },
-  methods: {
   }
 }
 </script>

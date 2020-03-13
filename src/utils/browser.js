@@ -1,12 +1,12 @@
 'use strict'
 
-import { App } from 'nw.gui'
-
+// import { App } from 'nw.gui'
+import gui from 'nw.gui'
 /**
  * 创建浏览器窗
  */
 export function createBrowser (e) {
-  App.Window.open('../../static/browsers/browser.html?URL=' + encodeURIComponent(e.targetUrl), {
+  gui.Window.open('../../static/browser/browser.html?URL=' + encodeURIComponent(e.targetUrl), {
     id: 'browserWindow',
     position: 'center',
     new_instance: true,

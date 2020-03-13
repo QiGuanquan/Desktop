@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../css/icofont.min.css">
+    <link rel="stylesheet" href="browser.css">
+    <script src="config.js" charset="utf-8"></script>
+    <script src="popup.js" charset="utf-8"></script>
+    <script src="tabs.js" charset="utf-8"></script>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="browser_main.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="controls">
+
+      <div id="tab-controls">
+        <ul id="tab-container">
+          <!-- <li id="new-tab"><a href="#new-tab">+</a></li> -->
+        </ul>
+        <div id="btn-controls">
+          <button id="mini-btn"><i class="icofont-minus icofont-1x"></i></button>
+          <button id="max-btn"><i class="icofont-maximize icofont-1x"></i></button>
+          <button id="close-btn"><i class="icofont-close icofont-1x"></i></button>
+        </div>
+      </div>
+
+      <div id="browser-controls">
+        <!-- <button id="back" title="Go Back">&#9664;</button> -->
+        <button id="back" title="Go Back"></button>
+        <button id="forward" title="Go Forward" hidden>&#9654;</button>
+        <button id="home" title="Go Home" hidden>&#8962;</button>
+        <!-- <button id="reload" title="Reload">&#10227;</button> -->
+        <button id="reload" title="Reload"></button>
+        <!-- <button id="terminate" title="Simulate Crash">&#9760;</button> -->
+
+        <form id="location-form">
+          <div id="center-column" hidden>
+            <input id="location" type="text" value="">
+          </div>
+          <input type="submit" value="Go" hidden>
+        </form>
+        <div id="browserBtn">
+          <button id="ie-btn"></button>
+          <button id="chrome-btn"></button>
+          <button id="firefox-btn"></button> 
+        </div>
+      </div>
+
+    </div>
+
+    <div id="content-container">
+    </div>
+
+  </body>
+  <script>
+    let gui = require('nw.gui')
+    let win = gui.Window.get()
+    let flag = false  // 标识当前的窗口是否最大化
+    let min = document.getElementById('mini-btn')
+    let max = document.getElementById('max-btn')
+    let close = document.getElementById('close-btn')
+    min.onclick = () => {
+      win.minimize()
+      min.blur()
+    }
+    max.onclick = () => {
+      max.blur()
+      if (flag) {
+        win.restore()  // 如果是最大化，则恢复窗口
+      } else {
+        win.maximize()  // 否则，最大化窗口
+      }
+    }
+    close.onclick = () => {
+      close.blur()
+      win.close(true)
+    }
+    // 监听窗口最大化事件
+    win.on('maximize', () => {
+      flag = true
+    })
+    // 监听窗口恢复事件
+    win.on('restore', () => {
+      flag = false
+    })
+  </script>
+</html>
