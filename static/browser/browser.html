@@ -72,7 +72,7 @@
     }
     close.onclick = () => {
       close.blur()
-      win.close(true)
+      return win.close(true)
     }
     // 监听窗口最大化事件
     win.on('maximize', () => {
