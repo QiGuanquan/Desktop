@@ -246,7 +246,7 @@ webview {
 
 .loading #reload {
   -webkit-animation: spinner-animation .5s infinite linear;
-  -webkit-transform-origin: 50% 55.5%;
+  -webkit-transform-origin: 50% 50%;
 }
 
 @-webkit-keyframes spinner-animation {
