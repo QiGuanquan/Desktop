@@ -2,6 +2,7 @@ html, body {
   margin: 0px;
   height: 100%;
   width: 100%;
+  font-size: 12px;
 }
 body {
   margin: 0px;
@@ -34,26 +35,25 @@ div {
 
 #controls {
   padding: 0px;
-  background-color: #e7eaed;
-  /* border-bottom: solid 1px #ccc; */
+  background-color: #d1d3d4;
   width: 100%;
   height: 73px;
-  /* 添加阴影 */
-  /* box-shadow: 0px 1px 4px #888888;
-  position: relative;
-  z-index: 2; */
 }
 
 #controls button,
 #controls input {
   font-size: 14px;
   line-height: 24px;
-  border-radius: 2px;
+  /* border-radius: 2px; */
   padding: 0 6px;
 }
 
 #controls button#reload {
-  border-radius: 16px;
+  border-radius: 50%;
+}
+
+#controls button#back {
+  border-radius: 50%;
 }
 
 #tab-controls {
@@ -61,21 +61,41 @@ div {
   -webkit-app-region: drag;
 }
 
+#close-btn {
+  background-image: url(/static/closeBtn.png);
+}
+
+#max-btn {
+  background-image: url(/static/maxBtn.png);
+}
+
+#mini-btn {
+  background-image: url(/static/miniBtn.png);
+}
+
 #close-btn, #max-btn, #mini-btn {
   -webkit-app-region: no-drag;
   width: 48px;
-  height: 24px;
+  height: 28px;
   border: none;
+  background-size: 16px 16px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #ie-btn, #chrome-btn, #firefox-btn {
   -webkit-app-region: no-drag;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border: none;
+  border-radius: 50%;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 8px;
 } 
 
 #max-btn:hover, #mini-btn:hover {
-  background-color: #c7cacf;
+  background-color: #bbbec3;
 }
 
 #close-btn:hover {
@@ -83,22 +103,25 @@ div {
 }
 
 #ie-btn:hover, #chrome-btn:hover, #firefox-btn:hover {
-  background-color: #c7cacf;
+  background-color: #eee;
 }
 
 #ie-btn {
   background-image: url(/static/IE.png);
-  background-size: cover;
+  /* background-size: cover; */
+  cursor: pointer;
 }
 
 #chrome-btn {
   background-image: url(/static/chrome.png);
-  background-size: cover;
+  /* background-size: cover; */
+  cursor: pointer;
 }
 
 #firefox-btn {
   background-image: url(/static/firefox.png);
-  background-size: cover;
+  /* background-size: cover; */
+  cursor: pointer;
 }
 
 #btn-controls {
@@ -109,9 +132,10 @@ div {
 }
 
 #browser-controls {
-  padding: 3px 3px 4px 3px;
+  height: 36px;
   background-color: #ffffff;
   -webkit-app-region: drag;
+  border-bottom: 1px solid #d1d3d4;
 }
 
 #browserBtn {
@@ -119,20 +143,40 @@ div {
 }
 
 #back {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   background-image: url(/static/back.png);
-  background-size: cover;
+  background-repeat: no-repeat;
   -webkit-app-region: no-drag;
+  cursor: pointer;
+  margin-left: 10px;
+  background-size: 16px 16px;
+  background-position: center;
 }
 
+
+#back[disabled] {
+  background-image: url(/static/backDisabled.png);
+  cursor: not-allowed;
+}
+
+#back:hover {
+  background-color: #eee;
+}
 #reload {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   background-image: url(/static/refresh.png);
-  background-size: cover;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+  background-position: center;
   margin-left: 10px;
   -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+#reload:hover {
+  background-color: #eee;
 }
 
 button,
@@ -246,6 +290,7 @@ webview {
 
 .loading #reload {
   -webkit-animation: spinner-animation .5s infinite linear;
+  /* -webkit-transform-origin: 50% 55.5%; */
   -webkit-transform-origin: 50% 50%;
 }
 
@@ -265,11 +310,12 @@ webview {
 #tab-container li {
   width: 120px;
   overflow: hidden;
-  display: inline-block;
+  /* display: inline-block; */
+  display: inline-flex;
   position: relative;
   vertical-align: bottom;
   margin: 0px;
-  padding: 6px 16px 6px 16px;
+  padding: 6px 16px 9px 16px;
   border: 0px;
   background: #e7eaed;
   -webkit-app-region: no-drag;
@@ -294,6 +340,12 @@ webview {
   padding: 0px;
   -webkit-margin-before: 0px;
   -webkit-margin-after: 0px;
+  flex-grow: 1;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  cursor: default;
 }
 
 #tab-container li a {
@@ -321,4 +373,19 @@ webview {
 #tab-container li#new-tab a {
   font-size: 24px;
   padding: 0px;
+}
+
+#closeLink {
+  width: 16px;
+  height: 16px;
+  background-image: url(/static/closeLink.png);
+  background-position: center;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+#closeLink:hover { 
+  background-color: #dbdbdc;
 }

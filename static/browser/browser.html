@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="../css/icofont.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="browser.css">
     <script src="config.js" charset="utf-8"></script>
     <script src="popup.js" charset="utf-8"></script>
@@ -14,22 +14,21 @@
 
       <div id="tab-controls">
         <ul id="tab-container">
-          <!-- <li id="new-tab"><a href="#new-tab">+</a></li> -->
         </ul>
         <div id="btn-controls">
-          <button id="mini-btn"><i class="icofont-minus icofont-1x"></i></button>
-          <button id="max-btn"><i class="icofont-maximize icofont-1x"></i></button>
-          <button id="close-btn"><i class="icofont-close icofont-1x"></i></button>
+          <button id="mini-btn"></button>
+          <button id="max-btn"></button>
+          <button id="close-btn"></button>
         </div>
       </div>
 
       <div id="browser-controls">
         <!-- <button id="back" title="Go Back">&#9664;</button> -->
-        <button id="back" title="Go Back"></button>
+        <button id="back" title="点击可后退" disabled></button>
         <button id="forward" title="Go Forward" hidden>&#9654;</button>
         <button id="home" title="Go Home" hidden>&#8962;</button>
         <!-- <button id="reload" title="Reload">&#10227;</button> -->
-        <button id="reload" title="Reload"></button>
+        <button id="reload" title="重新加载此页面"></button>
         <!-- <button id="terminate" title="Simulate Crash">&#9760;</button> -->
 
         <form id="location-form">
@@ -39,9 +38,9 @@
           <input type="submit" value="Go" hidden>
         </form>
         <div id="browserBtn">
-          <button id="ie-btn"></button>
-          <button id="chrome-btn"></button>
-          <button id="firefox-btn"></button> 
+          <button id="ie-btn" title="使用IE浏览器打开当前链接"></button>
+          <button id="chrome-btn" title="使用Chrome浏览器打开当前链接"></button>
+          <button id="firefox-btn" title="使用Firefox浏览器打开当前链接"></button> 
         </div>
       </div>
 

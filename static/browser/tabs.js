@@ -165,7 +165,7 @@ var tabs = (function (popupModule) {
     this.overlay = false
     this.labelContainer = dce('li')
     this.label = dce('p')
-    this.closeLink = dce('a')
+    this.closeLink = dce('button')
     this.webviewContainer = dce('div')
     this.popupConfirmBoxList = new popupModule.PopupConfirmBoxList(dce('ul'))
     this.webview = webview
@@ -178,7 +178,7 @@ var tabs = (function (popupModule) {
   }
 
   Tab.prototype.initLabelContainer = function () {
-    var name = this.name
+    // var name = this.name
     var labelContainer = this.labelContainer
     var label = this.label
     var closeLink = this.closeLink
@@ -188,9 +188,11 @@ var tabs = (function (popupModule) {
 
     this.setLabel('加载中...')
 
-    closeLink.href = '#close-' + name
-    closeLink.setAttribute('style', 'margin-right:5px')
-    closeLink.innerText = 'x'
+    // closeLink.href = '#close-' + name
+    // closeLink.setAttribute('style', 'margin-right:5px')
+    // closeLink.setAttribute('style', 'background-image:url(/static/closeBtn.png)')
+    closeLink.setAttribute('id', 'closeLink')
+    // closeLink.innerText = 'x'
 
     labelContainer.appendChild(label)
     labelContainer.appendChild(closeLink);
@@ -222,7 +224,11 @@ var tabs = (function (popupModule) {
           'loadstop',
           function (e) {
             tab.webview.executeScript({ code: 'function getTitle(){return document.title} getTitle()' }, function (title) {
-              tab.setLabel(title)
+              if (title !== undefined) {
+                tab.setLabel(title)
+              } else {
+                tab.setLabel('标签页')
+              }
               return title
             })
             return tab.doLoadStop(e)
