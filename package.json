@@ -1,7 +1,7 @@
 {
   "name": "LarkDesktop",
   "appName": "云雀",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "云雀客户端",
   "updataTime": "2019年12月19日14:28",
   "author": "lark team",
@@ -72,7 +72,7 @@
     "last 2 Chrome versions"
   ],
   "main": "http://localhost:8080",
-  "webviewSrc": "http://10.11.24.124:8081",
+  "webviewSrc": "http://10.11.24.129:8080",
   "manifestUrl": "http://10.11.24.129:8888/upgrade.json",
   "packages": {
     "win": {

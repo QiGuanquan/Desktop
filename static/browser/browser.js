@@ -216,6 +216,10 @@ var browser = (function (configModule, tabsModule) {
     }
     var selectedWebview = selectedTab.getWebview()
     this.back.disabled = !selectedWebview.canGoBack()
+
+    if (this.back.disabled === true) {
+      // this.back.setAttribute('style', 'background-image:url(/static/backDisabled.png)')
+    }
     this.forward.disabled = !selectedWebview.canGoForward()
     if (this.locationBar.value !== selectedTab.url) {
       this.locationBar.value = selectedTab.url

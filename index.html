@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <title>云雀</title>
   <link rel="shortcut icon" type="image/png" href="static/logo.png"/>
-  <link rel="stylesheet" href="static/css/icofont.min.css">
   <style>
     html, body {
       margin: 0px !important;
@@ -54,7 +53,36 @@
       margin-left: -8px;
     }
 
-    .min-button:hover, .max-button:hover, .question-button:hover {
+    #menuSetting {
+      background-image: url(static/versionBtn.png);
+      background-size: 16px 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #question {
+      background-image: url(static/questionBtn.png);
+    }
+
+    #min {
+      background-image: url(static/indexMini.png);
+    }
+
+    #max {
+      background-image: url(static/indexMax.png);
+    }
+
+    #close {
+      background-image: url(static/indexClose.png);
+    }
+
+    #question, #min, #max, #close {
+      background-size: 12px 12px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .min-button:hover, .max-button:hover, .question-button:hover, #menuSetting:hover {
       background-color: #003a8c;
       outline: none;
       display: inline-block;
@@ -62,10 +90,6 @@
     
      #menuSetting {
       outline: none;
-    }
-
-    #menuSetting:hover {
-      background-color: #0050b3;
     }
 
     .quit-button:hover {
@@ -92,13 +116,6 @@
     .lark-main {
       height: 100%;
       background-color: #eeeeee;
-      /*position: absolute;*/
-      /*left: 0;*/
-      /*top: 0;*/
-      /*bottom: 0;*/
-      /*right: 0;*/
-      /*padding: 6px;*/
-      /*background: transparent;*/
     }
 
     .tooltip {
@@ -130,13 +147,12 @@
 <body id="appMain" class="full-height">
 <div class="lark-main">
   <div class="title-bar">
-    <button id="menuSetting" class="title-button"><i class="icofont-navigation-menu"></i></button>
+    <button id="menuSetting" class="title-button"></button>
     <div class="button-container">
-      <button id="question" class="title-button button-gap question-button"><i class="icofont-question icofont-1x"></i>
-      </button>
-      <button id="min" class="title-button button-gap min-button"><i class="icofont-minus icofont-1x"></i></button>
-      <button id="max" class="title-button button-gap max-button"><i class="icofont-maximize icofont-1x"></i></button>
-      <button id="close" class="title-button button-gap quit-button"><i class="icofont-close icofont-1x"></i></button>
+      <button id="question" class="title-button button-gap question-button"></button>
+      <button id="min" class="title-button button-gap min-button"></button>
+      <button id="max" class="title-button button-gap max-button"></button>
+      <button id="close" class="title-button button-gap quit-button"></button>
     </div>
   </div>
   <div id="app"></div>
@@ -170,6 +186,18 @@
   win.on('close', function () {
     this.hide()
     isShowWindow = false
+  })
+
+  // 二次启动还原
+  // 第二次启动客户端
+  gui.App.on('open', function (cmdline) {
+    // 使得客户端显示在最前端
+    gui.Window.get().show()
+    // if (cmdline.indexOf('xxxxx://join/?meetingId=') !== -1) {
+    // // url唤醒的sdk
+    // // 传递参数做相关操作
+    //   callAddToMeetSDK(cmdline)
+    // }
   })
 
   // 添加菜单
@@ -300,5 +328,6 @@
     document.getElementById('larkPage')
     .contentWindow.postMessage('desktop-logout', '*')
   }
+  
 </script>
 </html>

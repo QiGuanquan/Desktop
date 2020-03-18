@@ -7,17 +7,13 @@
       </p>
       <div style="margin: 60px 120px 0px 120px">
         <p class="font-style" style="font-size: 24px;"><i class="fas fa-angle-double-down"></i> 请按以下方式操作：</p>
-        <p style="font-size: 24px;">1.确认本地“iNode”连接状态正常；</p>
-        <p style="font-size: 24px;">2.运行网关程序（程序位置“C:\Program Files\Jit\PNXGW”）；</p>
-        <p style="font-size: 24px;">3.双击启动“PNXClientUI.exe”；</p>
-        <p style="font-size: 24px;">4.双击院网关，地址“10.11.3.101”；</p>
-        <p style="font-size: 24px;">5.确认网关连通后，点击下方按钮重连。</p>
+        <p style="font-size: 24px;">请检查网络连接状态或网关连接状态。</p>
+        <p style="font-size: 24px;">确认连接成功之后，请点击下方重新连接按钮。</p>
+        <p style="font-size: 24px;">详情请咨询您所在单位信息中心。</p>
       </div>
       <p style="text-align:center;">
         <button class="error-button font-style" @click="reconnect">重新连接</button>
       </p>
-      <p style="float:right; margin-top:36px;"><span class="font-style" style="font-size: 24px;text-align:center;">如仍有问题请联系云雀团队 </span><span><img
-        style="width: 64px;height: 64px" src="/static/lark-baby.png"/></span></p>
     </div>
   </div>
 </template>
