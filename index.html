@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <title>云雀</title>
   <link rel="shortcut icon" type="image/png" href="static/logo.png"/>
-  <link rel="stylesheet" href="static/css/icofont.min.css">
   <style>
     html, body {
       margin: 0px !important;
@@ -54,6 +53,17 @@
       margin-left: -8px;
     }
 
+    #menuSetting {
+      background-image: url(static/versionBtn.png);
+      background-size: 16px 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #question {
+      background-image: url(static/questionBtn.png);
+    }
+
     #min {
       background-image: url(static/indexMini.png);
     }
@@ -66,13 +76,13 @@
       background-image: url(static/indexClose.png);
     }
 
-    #min, #max, #close {
+    #question, #min, #max, #close {
       background-size: 12px 12px;
       background-position: center;
       background-repeat: no-repeat;
     }
 
-    .min-button:hover, .max-button:hover, .question-button:hover {
+    .min-button:hover, .max-button:hover, .question-button:hover, #menuSetting:hover {
       background-color: #003a8c;
       outline: none;
       display: inline-block;
@@ -80,10 +90,6 @@
     
      #menuSetting {
       outline: none;
-    }
-
-    #menuSetting:hover {
-      background-color: #0050b3;
     }
 
     .quit-button:hover {
@@ -141,10 +147,9 @@
 <body id="appMain" class="full-height">
 <div class="lark-main">
   <div class="title-bar">
-    <button id="menuSetting" class="title-button"><i class="icofont-navigation-menu"></i></button>
+    <button id="menuSetting" class="title-button"></button>
     <div class="button-container">
-      <button id="question" class="title-button button-gap question-button"><i class="icofont-question icofont-1x"></i>
-      </button>
+      <button id="question" class="title-button button-gap question-button"></button>
       <button id="min" class="title-button button-gap min-button"></button>
       <button id="max" class="title-button button-gap max-button"></button>
       <button id="close" class="title-button button-gap quit-button"></button>
