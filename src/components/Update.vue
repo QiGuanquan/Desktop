@@ -6,7 +6,7 @@
     </section>
     <section class="update-container" v-if="info">
       <vue-element-loading :active="getLoad" spinner="bar-fade-scale" color="#FF6700"/>
-      <p><img src="/static/download.png" width="160" height="160"></p>
+      <p><img src="/static/img/download.png" width="160" height="160"></p>
       <p><span style="font-size: 32px" class="font-style">云雀新版本已发布</span></p>
       <p><span class="font-style-second">当前版本号: {{appinfo.manifest.version}}</span></p>
       <p><span class="font-style-second">最新版本号: {{info.version}}</span></p>

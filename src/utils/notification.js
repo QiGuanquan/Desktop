@@ -30,7 +30,7 @@ export function createNotification (event) {
       gui.Window.get().requestAttention(1)
       const data = message.data
       if (data && !data.props.icon) {
-        data.props.icon = 'file://' + process.cwd() + '/static/logo.png'
+        data.props.icon = 'file://' + process.cwd() + '/static/img/logo.png'
       }
       // eslint1-disable-next-line
       const notification = new Notification(data.title, data.props)

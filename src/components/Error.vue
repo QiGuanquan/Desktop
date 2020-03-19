@@ -2,7 +2,7 @@
   <div class="errorPage">
     <div style="margin: 36px">
       <p style="text-align:center; height: 80px">
-        <img src="/static/disconnect.png" class="head-img"/><span class="font-style head-style"
+        <img src="/static/img/disconnect.png" class="head-img"/><span class="font-style head-style"
                                                                   style="font-size: 36px;"> 网络连接故障</span>
       </p>
       <div style="margin: 60px 120px 0px 120px">

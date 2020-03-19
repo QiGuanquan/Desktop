@@ -62,15 +62,15 @@ div {
 }
 
 #close-btn {
-  background-image: url(/static/closeBtn.png);
+  background-image: url(/static/img/closeBtn.png);
 }
 
 #max-btn {
-  background-image: url(/static/maxBtn.png);
+  background-image: url(/static/img/maxBtn.png);
 }
 
 #mini-btn {
-  background-image: url(/static/miniBtn.png);
+  background-image: url(/static/img/miniBtn.png);
 }
 
 #close-btn, #max-btn, #mini-btn {
@@ -107,19 +107,19 @@ div {
 }
 
 #ie-btn {
-  background-image: url(/static/IE.png);
+  background-image: url(/static/img/IE.png);
   /* background-size: cover; */
   cursor: pointer;
 }
 
 #chrome-btn {
-  background-image: url(/static/chrome.png);
+  background-image: url(/static/img/chrome.png);
   /* background-size: cover; */
   cursor: pointer;
 }
 
 #firefox-btn {
-  background-image: url(/static/firefox.png);
+  background-image: url(/static/img/firefox.png);
   /* background-size: cover; */
   cursor: pointer;
 }
@@ -145,7 +145,7 @@ div {
 #back {
   width: 32px;
   height: 32px;
-  background-image: url(/static/back.png);
+  background-image: url(/static/img/back.png);
   background-repeat: no-repeat;
   -webkit-app-region: no-drag;
   cursor: pointer;
@@ -156,7 +156,7 @@ div {
 
 
 #back[disabled] {
-  background-image: url(/static/backDisabled.png);
+  background-image: url(/static/img/backDisabled.png);
   cursor: not-allowed;
 }
 
@@ -166,7 +166,7 @@ div {
 #reload {
   width: 32px;
   height: 32px;
-  background-image: url(/static/refresh.png);
+  background-image: url(/static/img/refresh.png);
   background-size: 16px 16px;
   background-repeat: no-repeat;
   /* background-size: cover; */
@@ -378,7 +378,7 @@ webview {
 #closeLink {
   width: 16px;
   height: 16px;
-  background-image: url(/static/closeLink.png);
+  background-image: url(/static/img/closeLink.png);
   background-position: center;
   background-size: 10px 10px;
   background-repeat: no-repeat;

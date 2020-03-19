@@ -89,7 +89,7 @@
     "resizable": true,
     "frame": false,
     "kiosk": false,
-    "icon": "/static/logo.png",
+    "icon": "/static/img/logo.png",
     "show_in_taskbar": true,
     "position": "center",
     "transparent": false,

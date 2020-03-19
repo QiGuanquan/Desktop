@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>云雀</title>
-  <link rel="shortcut icon" type="image/png" href="static/logo.png"/>
+  <link rel="shortcut icon" type="image/png" href="static/img/logo.png"/>
   <style>
     html, body {
       margin: 0px !important;
@@ -54,26 +54,26 @@
     }
 
     #menuSetting {
-      background-image: url(static/versionBtn.png);
+      background-image: url(static/img/versionBtn.png);
       background-size: 16px 16px;
       background-position: center;
       background-repeat: no-repeat;
     }
 
     #question {
-      background-image: url(static/questionBtn.png);
+      background-image: url(static/img/questionBtn.png);
     }
 
     #min {
-      background-image: url(static/indexMini.png);
+      background-image: url(static/img/indexMini.png);
     }
 
     #max {
-      background-image: url(static/indexMax.png);
+      background-image: url(static/img/indexMax.png);
     }
 
     #close {
-      background-image: url(static/indexClose.png);
+      background-image: url(static/img/indexClose.png);
     }
 
     #question, #min, #max, #close {
@@ -179,7 +179,7 @@
 
   let tray = new gui.Tray({
     title: '云雀',
-    icon: '/static/logo.png'
+    icon: '/static/img/logo.png'
   })
   tray.tooltip = '点击打开云雀'
 
@@ -303,8 +303,8 @@
   // eslint-disable-next-line
   function startIconFlash () {
     flashTimer = setInterval(function () {
-      const icon = '/static/logo.png'
-      const iconTrans = '/static/logo-trans.png'
+      const icon = '/static/img/logo.png'
+      const iconTrans = '/static/img/logo-trans.png'
       tray.icon = (tray.icon === icon) ? iconTrans : icon
       tray.tooltip = '您有新消息'
     }, 300)
@@ -313,7 +313,7 @@
   function stopIconFlash () {
     clearInterval(flashTimer)
     flashTimer = 0
-    tray.icon = '/static/logo.png'
+    tray.icon = '/static/img/logo.png'
     tray.tooltip = '点击打开云雀'
   }
   // 禁掉文件拖拽进客户端
