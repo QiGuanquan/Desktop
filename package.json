@@ -72,7 +72,7 @@
     "last 2 Chrome versions"
   ],
   "main": "http://localhost:8080",
-  "webviewSrc": "http://127.0.0.1:8081",
+  "webviewSrc": "http://10.11.24.129:8080",
   "manifestUrl": "http://10.11.24.129:8888/upgrade.json",
   "packages": {
     "win": {
@@ -103,7 +103,7 @@
     "webview",
     "videoCapture"
   ],
-  "chromium-args": "--disable-gpu",
+  "chromium-args": "--disable-password-generation  --disable-gpu --disable-gpu-compositing  --process-per-site --disable-crash-handler=true --disable-breakpad --disable-notifications --disable-glsl-translator --disable-java --disable-speech-api --disable-voice-input --disable-sync  --disable-app-window-cycling --disable-client-side-phishing-detection --disable-cloud-import --disable-datasaver-prompt --disable-demo-mode --disable-device-discovery-notifications --disable-logging --disable-network-portal-notification --ignore-certificate-errors --in-process-gpu",
   "webview": {
     "partitions": [
       {
