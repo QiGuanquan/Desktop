@@ -56,21 +56,8 @@ export default {
       handleRequest(e)
     })
     webview.addEventListener('drop', function (e) {
-      const df = e.dataTransfer
-      const data = { type: 'dropfile' }
-      if (df.items.length > 1) {
-          // 文件数量多余一个
-        data.data = [0, 0]
-        webview.contentWindow.postMessage(data, '*')
-        return
-      }
-      const item = df.items[0]
-      if (item.kind === 'file' && item.webkitGetAsEntry().isFile) {
-          // 文件校验成功
-        data.data = df.files
-      } else {
-          // 文件格式不正确
-        data.data = [0, 0]
+      const data = { type: 'dropfile',
+        data: e.dataTransfer.files
       }
       webview.contentWindow.postMessage(data, '*')
     })
