@@ -224,7 +224,8 @@ var tabs = (function (popupModule) {
           'loadstop',
           function (e) {
             tab.webview.executeScript({ code: 'function getTitle(){return document.title} getTitle()' }, function (title) {
-              if (title !== undefined) {
+              console.log('title', title)
+              if (title[0] !== '') {
                 tab.setLabel(title)
               } else {
                 tab.setLabel('标签页')
