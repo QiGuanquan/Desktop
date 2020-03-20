@@ -6,8 +6,9 @@ const options = { method: 'GET', mode: 'cors', credentials: 'include' }
 export const checkNetWork = () => {
   let connected = true
   return checkNetWorkConnected().then(status => {
-    if (status === 200) { return connected }
-    window.location.hash = '/error'
+    if (status !== 200) { window.location.hash = '/error' } else {
+      return connected
+    }
   })
 }
 
