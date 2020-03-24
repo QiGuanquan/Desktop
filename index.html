@@ -328,7 +328,8 @@
     document.getElementById('larkPage')
     .contentWindow.postMessage('desktop-logout', '*')
   }
-     // 禁止放大缩小
+
+  // 禁止放大缩小
   const scrollFunc = function (e) {
     e = e || window.event
     if (e.wheelDelta && event.ctrlKey) { // IE/Opera/Chrome

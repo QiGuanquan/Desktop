@@ -7,11 +7,11 @@
       </p>
       <div style="margin: 60px 120px 0px 120px">
         <p class="font-style" style="font-size: 24px;"><i class="fas fa-angle-double-down"></i> 请按以下方式操作：</p>
-        <p style="font-size: 24px;">请检查网络连接状态或网关连接状态。</p>
-        <p style="font-size: 24px;">确认连接成功之后，请点击下方重新连接按钮。</p>
-        <p style="font-size: 24px;">详情请咨询您所在单位信息中心。</p>
+        <p style="font-size: 20px;">·检查您的<strong>网络连接状态</strong>或<strong>网关连接状态</strong>；</p>
+        <p style="font-size: 20px;">·确认连接成功之后，请点击下方<strong>重新连接</strong>按钮；</p>
+        <p style="font-size: 20px;">·如仍出现当前界面，请咨询您所在单位信息中心。</p>
       </div>
-      <p style="text-align:center;">
+      <p style="text-align:center;marginTop:64px">
         <button class="error-button font-style" @click="reconnect">重新连接</button>
       </p>
     </div>

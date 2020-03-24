@@ -55,6 +55,7 @@ export default {
     webview.addEventListener('permissionrequest', function (e) {
       handleRequest(e)
     })
+
     webview.addEventListener('drop', function (e) {
       const df = e.dataTransfer
       const data = { type: 'dropfile' }
