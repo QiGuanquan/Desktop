@@ -328,6 +328,15 @@
     document.getElementById('larkPage')
     .contentWindow.postMessage('desktop-logout', '*')
   }
+
+  // 禁止放大缩小
+  const scrollFunc = function (e) {
+    e = e || window.event
+    if (e.wheelDelta && event.ctrlKey) { // IE/Opera/Chrome
+      event.returnValue = false
+    }
+  }
+  window.onmousewheel = scrollFunc
   
 </script>
 </html>
