@@ -1,8 +1,19 @@
 <template>
   <div class="lark-frame" id="larkFrame">
-    <vue-element-loading :active="isShow" spinner="spinner" color="#FF6700" size="64"/>
-        <webview :v-show="!isShow" id="larkPage" :src="src" autosize="on" style="display:flex; height:100%; width:100%;"
-             minwidth="1024" minheight="768" partition="trusted"></webview>
+    <!-- <vue-element-loading :active="isShow" spinner="spinner" color="#FF6700" size="64"/> -->
+    <vue-element-loading :active="!isShowWebview" duration="6.0">
+      <img src="/static/loading.gif" width="100px" height="100px">
+    </vue-element-loading>
+    <webview
+      v-show="isShowWebview"
+      id="larkPage"
+      :src="src"
+      autosize="on"
+      style="display:flex; height:100%; width:100%;"
+      minwidth="1024"
+      minheight="768"
+      partition="trusted">
+    </webview>
   </div>
 </template>
 
@@ -24,28 +35,39 @@ export default {
       isLoading: true,
       isDebug: false,
       mainWebView: {},
-      isShow: true,
-      src: manifest.webviewSrc
+      src: manifest.webviewSrc,
+      // 检测网络状态
+      netConnect: false,
+      // 客户端加载动画显示
+      loadSuccess: false
+    }
+  },
+  computed: {
+    isShowWebview () {
+      return this.netConnect && this.loadSuccess
     }
   },
   created () {
     return checkNetWork().then(status => {
-      if (status) {
-        this.isShow = false
-      }
+      this.netConnect = status
     })
   },
   components: {
     VueElementLoading
   },
   mounted () {
+    var that = this
     let webview = document.getElementById('larkPage')
     // webview.addEventListener('loadstart', function () {
+    //   console.log('isShowStart', this.isShow)
     //   this.isShow = false
     // })
-    // webview.addEventListener('loadstop', function () {
-    //   this.isShow = false
-    // })
+    webview.addEventListener('loadstop', function () {
+      that.loadSuccess = true
+    })
+    webview.addEventListener('loadabort', function () {
+      this.$router.push({name: 'Error.vue'})
+    })
     webview.addEventListener('newwindow', function (e) {
       createBrowser(e)
     })
