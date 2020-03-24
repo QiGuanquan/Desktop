@@ -66,7 +66,7 @@ export default {
       that.loadSuccess = true
     })
     webview.addEventListener('loadabort', function () {
-      this.$router.push({name: 'Error.vue'})
+      that.$router.push({name: 'Error'})
     })
     webview.addEventListener('newwindow', function (e) {
       createBrowser(e)
