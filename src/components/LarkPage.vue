@@ -1,9 +1,7 @@
 <template>
   <div class="lark-frame" id="larkFrame">
-    <!-- <vue-element-loading :active="!isShowWebview" duration="6.0">
-    <img src="/static/loading.gif" width="100px" height="100px">
-    </vue-element-loading> -->
     <webview
+      v-show="!$store.state.isShowLoading"
       id="larkPage"
       :src="src"
       autosize="on"
@@ -21,7 +19,6 @@ import {createBrowser} from '@/utils/browser'
 import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
 // import { checkNetWork } from '@/utils/network.js'
-import VueElementLoading from 'vue-element-loading'
 // import axios from 'axios'
 const { manifest } = App
 
@@ -83,19 +80,15 @@ export default {
     //   that.$router.push({ name: 'Error' })
     // })
   },
-  components: {
-    VueElementLoading
-  },
   mounted () {
-    // var that = this
+    var that = this
     let webview = document.getElementById('larkPage')
     // webview.addEventListener('loadstart', function () {
-    //   console.log('isShowStart', webview)
-    //   webview.stop()
+    //   that.$store.commit('SET_IS_SHOW_LOADING', false)
     // })
-    // webview.addEventListener('loadstop', function () {
-    //   that.loadSuccess = true
-    // })
+    webview.addEventListener('loadstop', function () {
+      that.$store.commit('SET_IS_SHOW_LOADING', false)
+    })
     webview.addEventListener('newwindow', function (e) {
       createBrowser(e)
     })

@@ -1,6 +1,6 @@
 <template>
   <div class="global-layout">
-    <vue-element-loading :active="true" duration="6.0">
+    <vue-element-loading :active="showLoading" duration="6.0">
       <img src="/static/loading.gif" width="100px" height="100px">
     </vue-element-loading>
 
@@ -17,6 +17,11 @@ export default {
     return {
       // eslint-disable-next-line no-undef
     //   isShowWebview: showLoading
+    }
+  },
+  computed: {
+    showLoading () {
+      return this.$store.state.isShowLoading
     }
   }
 }

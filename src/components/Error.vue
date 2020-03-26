@@ -28,10 +28,7 @@
       }
     },
     mounted () {
-      // eslint-disable-next-line no-undef
-      showLoading = false
-      // eslint-disable-next-line no-undef
-      console.log(showLoading)
+      this.$store.commit('SET_IS_SHOW_LOADING', false)
     },
     methods: {
       reconnect () {
