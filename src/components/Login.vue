@@ -28,7 +28,7 @@ export default {
       console.log('resp', resp)
       if (resp.status === 200) {
         console.log('200')
-        // that.$router.push({ name: 'LarkPage' })
+        that.$router.push({ name: 'LarkPage' })
       } else {
         console.log('resp.status')
         that.$router.push({ name: 'Error' })
