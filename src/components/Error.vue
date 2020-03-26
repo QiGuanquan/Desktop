@@ -28,10 +28,14 @@
       }
     },
     mounted () {
+      // eslint-disable-next-line no-undef
+      showLoading = false
+      // eslint-disable-next-line no-undef
+      console.log(showLoading)
     },
     methods: {
       reconnect () {
-        this.$router.push({ name: 'LarkPage' })
+        this.$router.push({ name: 'Login' })
       }
     }
   }

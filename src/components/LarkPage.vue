@@ -1,10 +1,9 @@
 <template>
   <div class="lark-frame" id="larkFrame">
-    <vue-element-loading :active="!isShowWebview" duration="6.0">
+    <!-- <vue-element-loading :active="!isShowWebview" duration="6.0">
     <img src="/static/loading.gif" width="100px" height="100px">
-    </vue-element-loading>
+    </vue-element-loading> -->
     <webview
-      v-show="isShowWebview"
       id="larkPage"
       :src="src"
       autosize="on"
@@ -23,7 +22,7 @@ import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
 // import { checkNetWork } from '@/utils/network.js'
 import VueElementLoading from 'vue-element-loading'
-import axios from 'axios'
+// import axios from 'axios'
 const { manifest } = App
 
 export default {
@@ -60,36 +59,43 @@ export default {
     //     this.$router.push({name: 'Error'})
     //   }
     // })
-    let getTimestamp = new Date().getTime()
-    let webviewIp = this.src + getTimestamp
-    var that = this
-    return axios({
-      method: 'get',
-      url: webviewIp
-    }).then(function (resp) {
-      if (resp.status === 200) {
-        that.netConnect = true
-      } else {
-        this.$router.push({ name: 'Error' })
-        throw new Error('LARK: lark server was not ok .')
-      }
-    }).catch(resp => {
-      this.$router.push({ name: 'Error' })
-    })
+
+    // 我是分割线——————————————————————————————————————————————————————————————————————————————————————————————
+    // let getTimestamp = new Date().getTime()
+    // let webviewIp = this.src + getTimestamp
+    // var that = this
+    // axios({
+    //   method: 'get',
+    //   url: webviewIp
+    // }).then(function (resp) {
+    //   console.log('resp', resp)
+    //   if (resp.status === 200) {
+    //     console.log('200')
+    //     this.webview.go()
+    //     that.netConnect = true
+    //   } else {
+    //     console.log('resp.status')
+    //     that.$router.push({ name: 'Error' })
+    //     throw new Error('LARK: lark server was not ok .')
+    //   }
+    // }).catch(resp => {
+    //   console.log('catch')
+    //   that.$router.push({ name: 'Error' })
+    // })
   },
   components: {
     VueElementLoading
   },
   mounted () {
-    var that = this
+    // var that = this
     let webview = document.getElementById('larkPage')
     // webview.addEventListener('loadstart', function () {
-    //   console.log('isShowStart', this.isShow)
-    //   this.isShow = false
+    //   console.log('isShowStart', webview)
+    //   webview.stop()
     // })
-    webview.addEventListener('loadstop', function () {
-      that.loadSuccess = true
-    })
+    // webview.addEventListener('loadstop', function () {
+    //   that.loadSuccess = true
+    // })
     webview.addEventListener('newwindow', function (e) {
       createBrowser(e)
     })
