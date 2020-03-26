@@ -1,8 +1,7 @@
 <template>
   <div class="lark-frame" id="larkFrame">
-    <!-- <vue-element-loading :active="isShow" spinner="spinner" color="#FF6700" size="64"/> -->
     <vue-element-loading :active="!isShowWebview" duration="6.0">
-      <img src="/static/loading.gif" width="100px" height="100px">
+    <img src="/static/loading.gif" width="100px" height="100px">
     </vue-element-loading>
     <webview
       v-show="isShowWebview"
@@ -22,8 +21,9 @@ import { App } from 'nw.gui'
 import {createBrowser} from '@/utils/browser'
 import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
-import { checkNetWork } from '@/utils/network.js'
+// import { checkNetWork } from '@/utils/network.js'
 import VueElementLoading from 'vue-element-loading'
+import axios from 'axios'
 const { manifest } = App
 
 export default {
@@ -48,8 +48,33 @@ export default {
     }
   },
   created () {
-    return checkNetWork().then(status => {
-      this.netConnect = status
+    // return checkNetWork().then(status => {
+    //   console.log('status', status)
+    //   if (status) {
+    //     this.netConnect = status
+    //   } else {
+    //     console.log('flase')
+    //     this.netConnect = true
+    //     this.loadSuccess = true
+    //     // this.webview.stop()
+    //     this.$router.push({name: 'Error'})
+    //   }
+    // })
+    let getTimestamp = new Date().getTime()
+    let webviewIp = this.src + getTimestamp
+    var that = this
+    return axios({
+      method: 'get',
+      url: webviewIp
+    }).then(function (resp) {
+      if (resp.status === 200) {
+        that.netConnect = true
+      } else {
+        this.$router.push({ name: 'Error' })
+        throw new Error('LARK: lark server was not ok .')
+      }
+    }).catch(resp => {
+      this.$router.push({ name: 'Error' })
     })
   },
   components: {
@@ -64,9 +89,6 @@ export default {
     // })
     webview.addEventListener('loadstop', function () {
       that.loadSuccess = true
-    })
-    webview.addEventListener('loadabort', function () {
-      this.$router.push({name: 'Error.vue'})
     })
     webview.addEventListener('newwindow', function (e) {
       createBrowser(e)
