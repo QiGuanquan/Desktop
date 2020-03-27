@@ -15,8 +15,6 @@ export default {
   components: { VueElementLoading },
   data () {
     return {
-      // eslint-disable-next-line no-undef
-    //   isShowWebview: showLoading
     }
   },
   computed: {

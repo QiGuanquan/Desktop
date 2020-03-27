@@ -22,20 +22,15 @@ export default {
     var that = this
     axios({
       method: 'get',
-      url: webviewIp,
-      timeout: 5 * 1000
+      url: webviewIp
     }).then(function (resp) {
-      console.log('resp', resp)
       if (resp.status === 200) {
-        console.log('200')
         that.$router.push({ name: 'LarkPage' })
       } else {
-        console.log('resp.status')
         that.$router.push({ name: 'Error' })
         throw new Error('LARK: lark server was not ok .')
       }
     }).catch(resp => {
-      console.log('catch')
       that.$router.push({ name: 'Error' })
     })
   },

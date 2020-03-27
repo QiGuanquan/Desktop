@@ -11,8 +11,11 @@
       <p><span class="font-style-second">当前版本号: {{appinfo.manifest.version}}</span></p>
       <p><span class="font-style-second">最新版本号: {{info.version}}</span></p>
       <!-- <p><span class="font-style" style="font-size: 16px; color: #e60c0c">注意：选择的文件下载路径不能包含中文或者特殊符号</span></p> -->
-      <button type="button" class="important-button" @click="startUpdate">开始自动更新</button>
-      <p><a href="http://10.11.24.129:8888/larkhome/downloadPage.html">去官网下载最新版安装包</a></p>
+      <button type="button" class="important-button" @click="startUpdata">自动更新</button>
+      <button type="button" class="important-button" @click="clearUpdata">暂不更新</button>
+      <button type="button" class="important-button" v-if="progress < 100" :disabled="progress >= 0 || !saveAsName" @click="showFileDialog">手动更新</button>
+      <input type="file" class="hidden" ref="fileInput" :nwsaveas="saveAsName" @change="startDownload">
+      <!-- <p><a href="http://10.11.24.129:8888/larkhome/downloadPage.html">去官网下载最新版安装包</a></p> -->
     </section>
     <div style="text-align: center">
       <p v-if="progress >= 400">更新错误： {{progress}} </p>
@@ -22,7 +25,8 @@
 </template>
 
 <script>
-  import { getUpdateJson, parseName } from '@/utils/update'
+  import { getUpdateJson, parseName, downloadHandle } from '@/utils/update'
+  import { Shell } from 'nw.gui'
   import VueElementLoading from 'vue-element-loading'
   let gui = require('nw.gui')
   let updater = require('node-webkit-updater')
@@ -55,7 +59,7 @@
       }
     },
     methods: {
-      startUpdate () {
+      startUpdata () {
         this.msg = '正在更新，请不要关闭软件'
         this.loading = false
         // 从manifest目录校验版本
@@ -91,6 +95,32 @@
       },
       openDownloadPage () {
         window.open('http://10.11.24.129:8888/larkhome/downloadPage.html')
+      },
+      clearUpdata () {
+        window.location.hash = '/larkpage'
+      },
+      showFileDialog (ev) {
+        this.$refs.fileInput.click()
+      },
+      startDownload (ev) {
+        const targetPath = ev.target.value
+
+        // reset
+        ev.target.value = ''
+        if (!targetPath.trim()) return
+
+        this.progress = 0
+        const file = downloadHandle(targetPath, this.info)
+
+        file.on('data', num => { this.progress = Math.ceil(num * 100) })
+        file.on('error', () => { this.progress = -2 })
+
+        file.on('end', filePath => {
+          this.progress = this.progress < 0 ? this.progress : 100
+
+          // open install file
+          setTimeout(() => Shell.openExternal(filePath), 100)
+        })
       }
     },
     created () {

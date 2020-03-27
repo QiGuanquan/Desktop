@@ -18,8 +18,6 @@ import { App } from 'nw.gui'
 import {createBrowser} from '@/utils/browser'
 import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
-// import { checkNetWork } from '@/utils/network.js'
-// import axios from 'axios'
 const { manifest } = App
 
 export default {
@@ -44,48 +42,10 @@ export default {
     }
   },
   created () {
-    // return checkNetWork().then(status => {
-    //   console.log('status', status)
-    //   if (status) {
-    //     this.netConnect = status
-    //   } else {
-    //     console.log('flase')
-    //     this.netConnect = true
-    //     this.loadSuccess = true
-    //     // this.webview.stop()
-    //     this.$router.push({name: 'Error'})
-    //   }
-    // })
-
-    // 我是分割线——————————————————————————————————————————————————————————————————————————————————————————————
-    // let getTimestamp = new Date().getTime()
-    // let webviewIp = this.src + getTimestamp
-    // var that = this
-    // axios({
-    //   method: 'get',
-    //   url: webviewIp
-    // }).then(function (resp) {
-    //   console.log('resp', resp)
-    //   if (resp.status === 200) {
-    //     console.log('200')
-    //     this.webview.go()
-    //     that.netConnect = true
-    //   } else {
-    //     console.log('resp.status')
-    //     that.$router.push({ name: 'Error' })
-    //     throw new Error('LARK: lark server was not ok .')
-    //   }
-    // }).catch(resp => {
-    //   console.log('catch')
-    //   that.$router.push({ name: 'Error' })
-    // })
   },
   mounted () {
     var that = this
     let webview = document.getElementById('larkPage')
-    // webview.addEventListener('loadstart', function () {
-    //   that.$store.commit('SET_IS_SHOW_LOADING', false)
-    // })
     webview.addEventListener('loadstop', function () {
       that.$store.commit('SET_IS_SHOW_LOADING', false)
     })
