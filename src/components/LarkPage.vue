@@ -65,7 +65,8 @@ export default {
     var that = this
     return axios({
       method: 'get',
-      url: webviewIp
+      url: webviewIp,
+      timeout: 8 * 1000
     }).then(function (resp) {
       if (resp.status === 200) {
         that.netConnect = true

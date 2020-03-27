@@ -1,9 +1,9 @@
 {
   "name": "LarkDesktop",
   "appName": "云雀",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "云雀客户端",
-  "updataTime": "2020年3月20日17:40",
+  "updataTime": "2020年3月27日11:40",
   "author": "lark team",
   "private": true,
   "scripts": {

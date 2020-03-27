@@ -4,6 +4,7 @@ import { App } from 'nw.gui'
 import fs from 'fs'
 import path from 'path'
 import http from 'http'
+import { compareVersion } from '@/utils/common.js'
 const events = require('events')
 
 const { manifest } = App
@@ -34,7 +35,8 @@ export function parseName (json) {
 // check version
 export function checkUpdate () {
   getUpdateJson().then(json => {
-    if (json.version === App.manifest.version) return
+    console.log('版本比较结果' + compareVersion(json.version, App.manifest.version))
+    if (compareVersion(App.manifest.version, json.version) !== -1) return
     window.location.hash = '/update'
   })
 }
