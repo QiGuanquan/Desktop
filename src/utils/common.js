@@ -37,8 +37,7 @@ export function cmd (p) {
   let iconv = require('iconv-lite')
   let encoding = 'cp936'
   let binaryEncoding = 'binary'
-  // eslint-disable-next-line no-unused-vars
-  let __this = this
+  // let __this = this
 
   function puts (error, stdout, stderr) {
     if (error) {
@@ -80,5 +79,41 @@ export function clearCache () {
     })
   } catch (e) {
     alert(e)
+  }
+}
+/**
+* 版本比较
+* 返回 0：版本相同
+*/
+export function compareVersion (a, b) {
+  try {
+    if (a === b) {
+      return 0
+    }
+    var componentsA = a.split('.')
+    var componentsB = b.split('.')
+    var len = Math.min(componentsA.length, componentsB.length)
+    // loop while the components are equal
+    for (var i = 0; i < len; i++) {
+        // A bigger than B
+      if (parseInt(componentsA[i]) > parseInt(componentsB[i])) {
+        return 1
+      }
+        // B bigger than A
+      if (parseInt(componentsA[i]) < parseInt(componentsB[i])) {
+        return -1
+      }
+    }
+    // If one's a prefix of the other, the longer one is greater.
+    if (componentsA.length > componentsB.length) {
+      return 1
+    }
+    if (componentsA.length < componentsB.length) {
+      return -1
+    }
+    // Otherwise they are the same.
+    return 0
+  } catch (e) {
+    return -1
   }
 }
