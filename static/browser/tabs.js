@@ -237,7 +237,8 @@ var tabs = (function (popupModule) {
           'newwindow',
           function (e) { return tab.doNewTab(e) })
       tab.webview.addEventListener('permissionrequest', function (e) {
-        if (e.permission === 'download') {
+        // 开放下载和媒体访问权限
+        if (e.permission === 'download' || e.permission === 'media') {
           e.request.allow()
         }
       })
