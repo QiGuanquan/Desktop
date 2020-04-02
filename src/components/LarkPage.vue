@@ -48,18 +48,13 @@ export default {
   },
   created () {
     return checkNetWork().then(status => {
-      console.log('status', status)
       if (status) {
         this.netConnect = status
       } else {
-        console.log('flase')
         this.netConnect = true
         this.loadSuccess = true
         this.$router.push({name: 'Error'})
-        throw new Error('LARK: lark server was not ok .')
       }
-    }).catch(status => {
-      this.$router.push({ name: 'Error' })
     })
   },
   components: {
