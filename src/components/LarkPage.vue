@@ -21,9 +21,8 @@ import { App } from 'nw.gui'
 import {createBrowser} from '@/utils/browser'
 import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
-// import { checkNetWork } from '@/utils/network.js'
+import { checkNetWork } from '@/utils/network.js'
 import VueElementLoading from 'vue-element-loading'
-import axios from 'axios'
 const { manifest } = App
 
 export default {
@@ -48,32 +47,18 @@ export default {
     }
   },
   created () {
-    // return checkNetWork().then(status => {
-    //   console.log('status', status)
-    //   if (status) {
-    //     this.netConnect = status
-    //   } else {
-    //     console.log('flase')
-    //     this.netConnect = true
-    //     this.loadSuccess = true
-    //     // this.webview.stop()
-    //     this.$router.push({name: 'Error'})
-    //   }
-    // })
-    let getTimestamp = new Date().getTime()
-    let webviewIp = this.src + getTimestamp
-    var that = this
-    return axios({
-      method: 'get',
-      url: webviewIp
-    }).then(function (resp) {
-      if (resp.status === 200) {
-        that.netConnect = true
+    return checkNetWork().then(status => {
+      console.log('status', status)
+      if (status) {
+        this.netConnect = status
       } else {
-        this.$router.push({ name: 'Error' })
+        console.log('flase')
+        this.netConnect = true
+        this.loadSuccess = true
+        this.$router.push({name: 'Error'})
         throw new Error('LARK: lark server was not ok .')
       }
-    }).catch(resp => {
+    }).catch(status => {
       this.$router.push({ name: 'Error' })
     })
   },
@@ -83,10 +68,6 @@ export default {
   mounted () {
     var that = this
     let webview = document.getElementById('larkPage')
-    // webview.addEventListener('loadstart', function () {
-    //   console.log('isShowStart', this.isShow)
-    //   this.isShow = false
-    // })
     webview.addEventListener('loadstop', function () {
       that.loadSuccess = true
     })
