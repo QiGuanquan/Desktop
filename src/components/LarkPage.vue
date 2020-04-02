@@ -53,7 +53,7 @@ export default {
       } else {
         this.netConnect = true
         this.loadSuccess = true
-        this.$router.push({name: 'Error'})
+        throw new Error('LARK: lark server was not ok .')
       }
     })
   },
