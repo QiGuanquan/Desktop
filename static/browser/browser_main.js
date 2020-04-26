@@ -19,6 +19,7 @@ var mainBrowser = null;
         query('#firefox-btn')
         // query('#new-tab')
         )
+    window.miniBrowser = mainBrowser
   })
 // eslint-disable-next-line
 })(browser)
