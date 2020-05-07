@@ -1,7 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 
-function resolve() {
+function resolve () {
   return path.resolve.apply(path, [__dirname, '..'].concat(...arguments))
 }
 
@@ -38,7 +38,7 @@ module.exports = {
       // manifest for nw
       // the fileds will merge with `./package.json` and build to `./dist/package.json` for NW.js
       // Manifest Format: http://docs.nwjs.io/en/latest/References/Manifest%20Format/
-      manifest: ['name', 'appName', 'version', 'updataTime', 'description', 'author', { main: './index.html' }, 'manifestUrl', 'webviewSrc', 'window', 'nodejs', 'js-flags', 'node-remote', 'chromium-args', 'webview', 'permission'],
+      manifest: ['name', 'appName', 'version', 'updataTime', 'description', 'author', { main: './index.html' }, 'manifestUrl', 'webviewSrc', 'window', 'nodejs', 'js-flags', 'node-remote', 'chromium-args', 'webview', 'permission', 'webkit'],
       // see document: https://github.com/nwjs/nw-builder
       builder: {
         files: [resolve('./dist/**')],
