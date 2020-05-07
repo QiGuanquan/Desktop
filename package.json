@@ -79,6 +79,9 @@
       "url": "http://10.11.24.129:8888/larkhome/updataApp/LarkDesktop.zip"
     }
   },
+  "webkit": {
+    "page-cache": false
+  },
   "window": {
     "title": "云雀",
     "toolbar": false,

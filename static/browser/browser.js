@@ -166,7 +166,8 @@ var browser = (function (configModule, tabsModule) {
     // }
     // console.log(this.tabs.labelContainer.width)
     var tab = this.tabs.append(dce('webview'))
-    tab.navigateTo(configModule.homepage)
+    // tab.navigateTo(configModule.homepage)
+    tab.navigateTo(e.targetUrl)
     this.tabs.selectTab(tab)
     return tab
   }
