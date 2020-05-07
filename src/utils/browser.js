@@ -28,8 +28,6 @@ export function createBrowser (e) {
     frame: false
   }, function (win) {
     // 监听新窗口焦点事件
-    console.log('win.window', win)
-    console.log('came', e.targetUrl)
     win.window.miniBrowser.doNewTab(e)
   })
 }
