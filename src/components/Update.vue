@@ -97,7 +97,7 @@
         window.open('http://10.11.24.129:8888/larkhome/downloadPage.html')
       },
       clearUpdata () {
-        window.location.hash = '/larkpage'
+        window.location.hash = '/'
       },
       showFileDialog (ev) {
         this.$refs.fileInput.click()
