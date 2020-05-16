@@ -19,6 +19,7 @@
 <script>
 import { App } from 'nw.gui'
 import {createBrowser} from '@/utils/browser'
+import { openLocalApplication } from '@/utils/common'
 import {createNotification} from '@/utils/notification'
 import {handleRequest} from '@/utils/permissionrequest'
 import { checkNetWork } from '@/utils/network.js'
@@ -72,6 +73,10 @@ export default {
       that.loadSuccess = true
     })
     webview.addEventListener('newwindow', function (e) {
+      if (e.targetUrl.includes('openlocalapplication')) {
+        openLocalApplication(e.targetUrl)
+        return
+      }
       createBrowser(e)
     })
     webview.addEventListener('consolemessage', function (e) {
