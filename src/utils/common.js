@@ -117,3 +117,78 @@ export function compareVersion (a, b) {
     return -1
   }
 }
+
+/**
+ * 获取url地址参数对象
+ * @param {String}} url 待解析地址
+ */
+export function getUrlParamsObject (url) {
+  var result = {}
+  var query = url.split('?')[1]
+  var queryArr = query.split('&')
+  queryArr.forEach(function (item) {
+    var value = item.split('=')[1]
+    var key = item.split('=')[0]
+    result[key] = value
+  })
+  return result
+}
+/**
+ * 打开本地应用程序
+ * @param {String} url 待处理的地址
+ */
+export function openLocalApplication (url) {
+  const paramsString = getUrlParamsObject(url).data
+  const paramsData = JSON.parse(decodeURIComponent(paramsString))
+
+  handleFilePreview(paramsData)
+}
+
+const handleFilePreview = (data) => {
+  console.log('cwd', process.cwd())
+  console.log('PREVIEW', data)
+  // download
+  downloadAndSave(data)
+  // open
+  // require('child_process').execSync('start chrome "' + path + '"')
+}
+
+/**
+ * download and save file to local
+ * @param {String} Authorization user token
+ * @param {*} downloadUrl download url
+ */
+const downloadAndSave = ({ Authorization, downloadUrl, extension }) => {
+  const fs = require('fs')
+  const path = require('path')
+  const axios = require('axios')
+  axios.get(downloadUrl, {
+    headers: { Authorization },
+    responseType: 'stream'
+  }).then((response) => {
+    const targetPath = process.cwd() + '/temp'
+    const fileName = `${+new Date()}.${extension}`
+    if (!fs.existsSync(targetPath)) {
+      fs.mkdirSync(targetPath)
+    }
+    const savePath = path.resolve(targetPath, fileName)
+    const writer = fs.createWriteStream(savePath)
+    response.data.pipe(writer)
+    writer.on('finish', () => {
+      openPreviewPlugin(savePath)
+    })
+  })
+}
+
+/**
+ * open preview plugin
+ * @param {String} filePath target file path
+ */
+const openPreviewPlugin = (filePath) => {
+  const childProcess = require('child_process')
+  const pluginPath = process.cwd() + '/viewer/bin/LarkViewer.exe'
+  const commond = `"${pluginPath}" -filepath ${filePath}`
+  childProcess.exec(commond, {}, (error) => {
+    console.error(error)
+  })
+}
