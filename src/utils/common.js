@@ -152,7 +152,7 @@ export function openLocalApplication (url) {
 const handleFilePreview = (data) => {
   const humane = require('humane-js')
   humane.timeout = 0
-  humane.info('正在生成预览,请稍候')
+  humane.log('正在生成预览,请稍候')
   console.log('cwd', process.cwd())
   console.log('PREVIEW', data)
   // download and save
@@ -173,7 +173,7 @@ const downloadAndSave = ({ Authorization, downloadUrl, extension }, callback) =>
     headers: { Authorization },
     responseType: 'stream'
   }).then((response) => {
-    const targetPath = path.resolve(path.dirname(process.execPath), '/temp')
+    const targetPath = path.dirname(process.execPath) + '/temp'
     const fileName = `${+new Date()}.${extension}`
     if (!fs.existsSync(targetPath)) {
       fs.mkdirSync(targetPath)
@@ -197,7 +197,9 @@ const openPreviewPlugin = (filePath) => {
   const childProcess = require('child_process')
   const humane = require('humane-js')
   const path = require('path')
-  const pluginPath = path.resolve(path.dirname(process.execPath), '/viewer/bin/LarkViewer.exe')
+  const pluginPath = path.dirname(process.execPath) + '/viewer/bin/LarkViewer.exe'
+  // const pluginPath = process.cwd(), '/viewer/bin/LarkViewer.exe'
+  console.log(pluginPath)
   const commond = `"${pluginPath}" -filepath ${filePath}`
   childProcess.exec(commond, {}, (error) => {
     if (error) { humane.remove() }
