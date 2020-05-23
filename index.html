@@ -87,7 +87,7 @@
       outline: none;
       display: inline-block;
     }
-    
+
      #menuSetting {
       outline: none;
     }
@@ -161,6 +161,8 @@
 <script>
   // let cp = require('child_process')
   let gui = require('nw.gui')
+  let path = require('path')
+  let fs = require('fs')
   let win = gui.Window.get()
   let flag = false  // 标识当前的窗口是否最大化
   let min = document.getElementById('min')
@@ -220,6 +222,7 @@
     label: '退出云雀',
     click: function () {
       win.hide()
+      clearTempFile()
       sentCloseMsg()
       setTimeout(() => {
         gui.App.quit()
@@ -328,6 +331,28 @@
     document.getElementById('larkPage')
     .contentWindow.postMessage('desktop-logout', '*')
   }
+  // 清理缓存文件 项目安装目录下的temp文件夹
+  const clearTempFile = function () {
+    const workFile = path.dirname(process.execPath)
+    const tempFileAddress = path.resolve(workFile, '/temp')
+    deleteFileByPath(tempFileAddress)
+  }
+  const deleteFileByPath = (path) => {
+    console.log('delete file ')
+    var files = []
+    if (fs.existsSync(path)) {
+      files = fs.readdirSync(path)
+      files.forEach(function (file, index) {
+        var curPath = path + '/' + file
+        if (fs.statSync(curPath).isDirectory()) { // recurse
+          deleteFileByPath(curPath)
+        } else { // delete file
+          fs.unlinkSync(curPath)
+        }
+      })
+      fs.rmdirSync(path)
+    }
+  }
 
   // 禁止放大缩小
   const scrollFunc = function (e) {
@@ -337,6 +362,6 @@
     }
   }
   window.onmousewheel = scrollFunc
-  
+
 </script>
 </html>
