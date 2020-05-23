@@ -334,7 +334,7 @@
   // 清理缓存文件 项目安装目录下的temp文件夹
   const clearTempFile = function () {
     const workFile = path.dirname(process.execPath)
-    const tempFileAddress = path.resolve(workFile, '/temp')
+    const tempFileAddress = workFile + '/temp'
     deleteFileByPath(tempFileAddress)
   }
   const deleteFileByPath = (path) => {
