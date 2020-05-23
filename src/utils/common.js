@@ -134,6 +134,11 @@ export function getUrlParamsObject (url) {
   return result
 }
 /**
+ * **************************************************************
+ * ******************** lark viewer 临时增加 ********************
+ * vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+ */
+/**
  * 打开本地应用程序
  * @param {String} url 待处理的地址
  */
@@ -145,12 +150,13 @@ export function openLocalApplication (url) {
 }
 
 const handleFilePreview = (data) => {
+  const humane = require('humane-js')
+  humane.timeout = 0
+  humane.info('正在生成预览,请稍候')
   console.log('cwd', process.cwd())
   console.log('PREVIEW', data)
-  // download
-  downloadAndSave(data)
-  // open
-  // require('child_process').execSync('start chrome "' + path + '"')
+  // download and save
+  downloadAndSave(data, openPreviewPlugin)
 }
 
 /**
@@ -158,15 +164,16 @@ const handleFilePreview = (data) => {
  * @param {String} Authorization user token
  * @param {*} downloadUrl download url
  */
-const downloadAndSave = ({ Authorization, downloadUrl, extension }) => {
+const downloadAndSave = ({ Authorization, downloadUrl, extension }, callback) => {
   const fs = require('fs')
   const path = require('path')
   const axios = require('axios')
+  const humane = require('humane-js')
   axios.get(downloadUrl, {
     headers: { Authorization },
     responseType: 'stream'
   }).then((response) => {
-    const targetPath = process.cwd() + '/temp'
+    const targetPath = path.resolve(path.dirname(process.execPath), '/temp')
     const fileName = `${+new Date()}.${extension}`
     if (!fs.existsSync(targetPath)) {
       fs.mkdirSync(targetPath)
@@ -175,8 +182,10 @@ const downloadAndSave = ({ Authorization, downloadUrl, extension }) => {
     const writer = fs.createWriteStream(savePath)
     response.data.pipe(writer)
     writer.on('finish', () => {
-      openPreviewPlugin(savePath)
+      callback(savePath)
     })
+  }).catch(error => {
+    humane.remove(() => console.error(error))
   })
 }
 
@@ -186,9 +195,19 @@ const downloadAndSave = ({ Authorization, downloadUrl, extension }) => {
  */
 const openPreviewPlugin = (filePath) => {
   const childProcess = require('child_process')
-  const pluginPath = process.cwd() + '/viewer/bin/LarkViewer.exe'
+  const humane = require('humane-js')
+  const path = require('path')
+  const pluginPath = path.resolve(path.dirname(process.execPath), '/viewer/bin/LarkViewer.exe')
   const commond = `"${pluginPath}" -filepath ${filePath}`
   childProcess.exec(commond, {}, (error) => {
-    console.error(error)
+    if (error) { humane.remove() }
+  })
+  setTimeout(() => {
+    humane.remove(() => { console.log('closed') })
   })
 }
+/**
+ * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ * ******************** lark viewer 临时增加 ********************
+ * **************************************************************
+ */
