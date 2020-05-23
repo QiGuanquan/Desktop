@@ -173,7 +173,7 @@ const downloadAndSave = ({ Authorization, downloadUrl, extension }, callback) =>
     headers: { Authorization },
     responseType: 'stream'
   }).then((response) => {
-    const targetPath = process.cwd() + '/temp'
+    const targetPath = path.resolve(path.dirname(process.execPath), '/temp')
     const fileName = `${+new Date()}.${extension}`
     if (!fs.existsSync(targetPath)) {
       fs.mkdirSync(targetPath)
@@ -196,7 +196,8 @@ const downloadAndSave = ({ Authorization, downloadUrl, extension }, callback) =>
 const openPreviewPlugin = (filePath) => {
   const childProcess = require('child_process')
   const humane = require('humane-js')
-  const pluginPath = process.cwd() + '/viewer/bin/LarkViewer.exe'
+  const path = require('path')
+  const pluginPath = path.resolve(path.dirname(process.execPath), '/viewer/bin/LarkViewer.exe')
   const commond = `"${pluginPath}" -filepath ${filePath}`
   childProcess.exec(commond, {}, (error) => {
     if (error) { humane.remove() }
