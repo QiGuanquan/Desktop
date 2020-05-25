@@ -206,7 +206,7 @@ const openPreviewPlugin = (filePath) => {
   })
   setTimeout(() => {
     humane.remove(() => { console.log('closed') })
-  })
+  }, 5000)
 }
 /**
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
