@@ -6,14 +6,18 @@
     </section>
     <section class="update-container" v-if="info">
       <vue-element-loading :active="getLoad" spinner="bar-fade-scale" color="#FF6700"/>
-      <p><img src="/static/download.png" width="160" height="160"></p>
-      <p><span style="font-size: 32px" class="font-style">云雀新版本已发布</span></p>
-      <p><span class="font-style-second">当前版本号: {{appinfo.manifest.version}}</span></p>
-      <p><span class="font-style-second">最新版本号: {{info.version}}</span></p>
+      <!-- <p><img src="/static/download.png" width="160" height="160"></p> -->
+      <p style="text-align: center"><span style="font-size: 32px" class="font-style">云雀新版本已发布</span></p>
+      <p style="text-align: center"><span class="font-style-second">当前版本号: {{appinfo.manifest.version}}</span></p>
+      <p style="text-align: center"><span class="font-style-second">最新版本号: {{info.version}}</span></p>
       <!-- <p><span class="font-style" style="font-size: 16px; color: #e60c0c">注意：选择的文件下载路径不能包含中文或者特殊符号</span></p> -->
       <button type="button" class="important-button" @click="startUpdata">自动更新</button>
-      <button type="button" class="important-button" @click="clearUpdata">暂不更新</button>
-      <button type="button" class="important-button" v-if="progress < 100" :disabled="progress >= 0 || !saveAsName" @click="showFileDialog">手动更新</button>
+      <p><span style="font-size: 24px" class="newVersionTxt">新版本特性：</span></p>
+      <input type="text" class="textArea" readonly="true" :value="versionInfo">
+      <div class="btnGroup" style="text-align: right">
+      <button type="button" class="noupdate-button" @click="clearUpdata">暂不更新</button>
+      <button type="button" class="handleupdate-button" v-if="progress < 100"  @click="showFileDialog">手动更新</button>
+      </div>
       <input type="file" class="hidden" ref="fileInput" :nwsaveas="saveAsName" @change="startDownload">
       <!-- <p><a href="http://10.11.24.129:8888/larkhome/downloadPage.html">去官网下载最新版安装包</a></p> -->
     </section>
@@ -43,7 +47,8 @@
         jsonIsLoading: true,
         progress: -1,  // init: -1, error: -2~-5
         msg: '等待更新',
-        loading: true
+        loading: true,
+        versionInfo: ''
       }
     },
     components: {
@@ -69,6 +74,7 @@
             this.progress = 400
           }
           if (!error && newVersionExists) {
+            // console.log(error)
             // 下载新版本
             upd.download(function (error, filename) {
               if (error) {
@@ -90,6 +96,7 @@
                 }, manifest)
               }
             }, manifest)
+            console.log(manifest)
           }
         })
       },
@@ -103,6 +110,7 @@
         this.$refs.fileInput.click()
       },
       startDownload (ev) {
+        console.log('ev', ev)
         const targetPath = ev.target.value
 
         // reset
@@ -124,6 +132,13 @@
       }
     },
     created () {
+      const { manifest } = gui.App
+      window.fetch(manifest.manifestUrl)
+      .then(resp => resp.json())
+      .then(json => {
+        this.versionInfo = json.versionDescription
+        // return json.versionDescription
+      })
       // gui.Window.get().showDevTools()
       getUpdateJson().catch(err => { console.log(err) }).then(json => {
         this.jsonIsLoading = false
@@ -164,11 +179,12 @@
     margin-bottom: 3em;
   }
   .update-container{
-    text-align: center; /*让div内部文字居中*/
+     /*让div内部文字居中*/
+    /* text-align: center; */
     background-color: #fff;
     border-radius: 8px;
-    width: 450px;
-    height: 450px;
+    width: 80%;
+    height: 70%;
     margin: auto;
     position: absolute;
     top: 0;
@@ -183,8 +199,22 @@
   .font-style-second{
     color: #6a696f;
   }
-  .important-button{
-    background-color: #4CAF50;
+  .noupdate-button{
+    background-color: #EEEEEE;
+    color: black;
+    padding: 15px 32px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor:pointer;
+    outline: none;
+  }
+
+  .handleupdate-button{
+    background-color: #597ef7;
     color: white;
     padding: 15px 32px;
     border: none;
@@ -194,9 +224,35 @@
     font-size: 16px;
     border-radius: 4px;
     cursor:pointer;
+    margin-left: 16px;
+    outline: none;
   }
 
-  .important-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  .noupdate-button:hover {
+    background-color: #cccccc;
+  }
+
+  .handleupdate-button:hover {
+    background-color: #2f54eb;
+  }
+
+  .btnGroup {
+    position: absolute;
+    width: 100%;
+    bottom: 16px;
+    margin-left: -64px;
+  }
+  
+  .textArea {
+    width: 100%;
+    height: 40%;
+    font-size: 24px;
+    text-align: center;
+    border: none;
+    background-color: #f0f5ff;
+  }
+
+  .newVersionTxt {
+    text-align: left;
   }
 </style>

@@ -1,7 +1,7 @@
 {
   "name": "LarkDesktop",
   "appName": "云雀",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "云雀客户端",
   "updataTime": "2020年3月27日11:40",
   "author": "lark team",
@@ -73,11 +73,11 @@
     "last 2 Chrome versions"
   ],
   "main": "http://localhost:8080",
-  "webviewSrc": "http://10.11.24.89:8080/",
-  "manifestUrl": "http://10.11.24.129:8888/upgrade.json",
+  "webviewSrc": "http://10.11.24.198:8080/",
+  "manifestUrl": "http://10.11.24.128:8888/upgrade.json",
   "packages": {
     "win": {
-      "url": "http://10.11.24.129:8888/larkhome/updataApp/LarkDesktop.zip"
+      "url": "http://10.11.24.128:8888/larkhome/updataApp/LarkDesktop.zip"
     }
   },
   "webkit": {
