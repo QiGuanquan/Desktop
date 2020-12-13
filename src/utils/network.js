@@ -2,6 +2,8 @@ import { App } from 'nw.gui'
 
 const { manifest } = App
 const options = { method: 'GET', mode: 'cors', credentials: 'include' }
+const timestamp = new Date().getTime()
+const newRequest = manifest.webviewSrc + timestamp
 
 export const checkNetWork = () => {
   let connected = true
@@ -13,7 +15,7 @@ export const checkNetWork = () => {
 }
 
 function checkNetWorkConnected () {
-  return window.fetch(manifest.webviewSrc, options)
+  return window.fetch(newRequest, options)
     .then(
       function (response) {
         if (response.ok) {
